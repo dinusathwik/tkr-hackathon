@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Print Jobs - Xerox Print Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1, h2 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        tr:hover { background-color: #f5f5f5; }
+        .status-pending { color: orange; }
+        .status-completed { color: green; }
+        .status-failed { color: red; }
+        .btn { display: inline-block; padding: 8px 16px; background-color: #3498db; color: white; 
+               text-decoration: none; border-radius: 4px; }
+        .btn:hover { background-color: #2980b9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Print Jobs for {{ shop_name }}</h1>
+        <h3>Shop ID: {{ shop_id }}</h3>
+        
+        {% if jobs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Filename</th>
+                    <th>Copies</th>
+                    <th>Color</th>
+                    <th>Paper Size</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.job_id }}</td>
+                    <td>{{ job.filename }}</td>
+                    <td>{{ job.copies }}</td>
+                    <td>{{ 'Yes' if job.color else 'No' }}</td>
+                    <td>{{ job.paper_size }}</td>
+                    <td class="status-{{ job.status }}">{{ job.status }}</td>
+                    <td>{{ job.created_at }}</td>
+                    <td>
+                        <button class="btn" onclick="updateStatus('{{ job.job_id }}', 'completed')">Mark Completed</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No print jobs for this shop yet.</p>
+        {% endif %}
+        
+        <p><a href="/admin">Back to Admin Dashboard</a></p>
+    </div>
+    
+    <script>
+        function updateStatus(jobId, status) {
+            // In a real implementation, this would call an API to update the job status
+            alert('This functionality would update job ' + jobId + ' to status: ' + status);
+            // Reload the page to show the updated status
+            // location.reload();
+        }
+    </script>
+</body>
+</html>
+            

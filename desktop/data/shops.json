@@ -1,0 +1,75 @@
+[
+  {
+    "shop_id": "senha",
+    "shop_name": "snehabunny",
+    "server_url": "http://localhost:6989",
+    "created_at": "2025-03-12T00:42:37.231421",
+    "qr_code_path": "qr_senha_d768b033.png",
+    "updated_at": "2025-03-12T01:13:13.710036"
+  },
+  {
+    "shop_id": "dinu",
+    "shop_name": "dinuuuuu",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T01:33:17.326408",
+    "qr_code_path": "qr_dinu_c39a8d95.png"
+  },
+  {
+    "shop_id": "uday",
+    "shop_name": "snehabunny",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T01:44:49.283758",
+    "qr_code_path": "qr_uday_2693343e.png",
+    "updated_at": "2025-03-12T01:45:32.156121"
+  },
+  {
+    "shop_id": "tkr123",
+    "shop_name": "tkr shop",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T01:46:11.023504",
+    "qr_code_path": "qr_tkr123_7a37ac33.png"
+  },
+  {
+    "shop_id": "ARJUN",
+    "shop_name": "ARJUNSNEHA",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T02:09:18.219478",
+    "qr_code_path": "qr_ARJUN_e92b68f2.png"
+  },
+  {
+    "shop_id": "sadhika",
+    "shop_name": "sadhika_dinu",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T03:41:04.433283",
+    "qr_code_path": "qr_sadhika_303e8418.png"
+  },
+  {
+    "shop_id": "abhi",
+    "shop_name": "abhi123",
+    "server_url": "http://127.0.0.1:6989/",
+    "created_at": "2025-03-12T05:39:23.701228",
+    "qr_code_path": "qr_abhi_35c494ab.png"
+  },
+  {
+    "shop_id": "rhoit",
+    "shop_name": "rhohit",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T09:47:57.551957",
+    "qr_code_path": "qr_rhoit_301d9521.png"
+  },
+  {
+    "shop_id": "shop_649eac91",
+    "shop_name": "dinu sathwik",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T10:56:32.813297",
+    "qr_code_path": "qr_shop_649eac91_f91771a1.png"
+  },
+  {
+    "shop_id": "shop_7d843dd5",
+    "shop_name": "dinuu99",
+    "server_url": "http://192.168.0.178:6989",
+    "created_at": "2025-03-12T11:03:06.499683",
+    "qr_code_path": "qr_shop_7d843dd5_ec8b604b.png",
+    "updated_at": "2025-03-12T11:04:23.751011"
+  }
+]

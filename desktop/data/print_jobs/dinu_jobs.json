@@ -1,0 +1,35 @@
+[
+  {
+    "job_id": "job_9ed6975ef90b4291b696b28d69d2ad07",
+    "shop_id": "dinu",
+    "filename": "ticket_19_aug.pdf",
+    "file_path": "data/print_jobs/dinu/job_9ed6975ef90b4291b696b28d69d2ad07.pdf",
+    "copies": "2",
+    "color": false,
+    "paper_size": "A4",
+    "status": "pending",
+    "created_at": "2025-03-12T01:36:10.645994"
+  },
+  {
+    "job_id": "job_12c014a55f1a4f63be47b68504555936",
+    "shop_id": "dinu",
+    "filename": "ticket_19_aug.pdf",
+    "file_path": "data/print_jobs/dinu/job_12c014a55f1a4f63be47b68504555936.pdf",
+    "copies": "3",
+    "color": false,
+    "paper_size": "A4",
+    "status": "pending",
+    "created_at": "2025-03-12T01:41:26.645949"
+  },
+  {
+    "job_id": "job_c5b3caaad3984a1285a6cfa06615a7f5",
+    "shop_id": "dinu",
+    "filename": "soulution_hackathon.docx",
+    "file_path": "data/print_jobs/dinu/job_c5b3caaad3984a1285a6cfa06615a7f5.docx",
+    "copies": "4",
+    "color": true,
+    "paper_size": "A4",
+    "status": "pending",
+    "created_at": "2025-03-12T10:57:41.965465"
+  }
+]

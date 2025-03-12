@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - Xerox Print Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        tr:hover { background-color: #f5f5f5; }
+        .btn { display: inline-block; padding: 8px 16px; background-color: #3498db; color: white; 
+               text-decoration: none; border-radius: 4px; }
+        .btn:hover { background-color: #2980b9; }
+        .qr-code { max-width: 100px; max-height: 100px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <h2>Registered Shops</h2>
+        
+        {% if shops %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Shop ID</th>
+                    <th>Shop Name</th>
+                    <th>Server URL</th>
+                    <th>QR Code</th>
+                    <th>Registered</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shop in shops %}
+                <tr>
+                    <td>{{ shop.shop_id }}</td>
+                    <td>{{ shop.shop_name or 'N/A' }}</td>
+                    <td>{{ shop.server_url }}</td>
+                    <td>
+                        {% if shop.qr_code_path %}
+                        <img src="/static/qr_codes/{{ shop.qr_code_path }}" class="qr-code">
+                        {% else %}
+                        No QR Code
+                        {% endif %}
+                    </td>
+                    <td>{{ shop.created_at }}</td>
+                    <td>
+                        <a href="/admin/jobs/{{ shop.shop_id }}" class="btn">View Jobs</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No shops registered yet.</p>
+        {% endif %}
+        
+        <p><a href="/">Back to Home</a></p>
+    </div>
+</body>
+</html>
+            

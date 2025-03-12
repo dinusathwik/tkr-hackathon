@@ -1,0 +1,13 @@
+[
+  {
+    "job_id": "job_a35808f737a04f3e89bc40168eb198d0",
+    "shop_id": "tkr123",
+    "filename": "ticket_19_aug.pdf",
+    "file_path": "data/print_jobs/tkr123/job_a35808f737a04f3e89bc40168eb198d0.pdf",
+    "copies": "2",
+    "color": false,
+    "paper_size": "A4",
+    "status": "pending",
+    "created_at": "2025-03-12T01:47:20.210059"
+  }
+]

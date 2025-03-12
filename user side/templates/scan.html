@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan QR Code - Xerox Print</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #2c3e50; }
+        .btn { display: inline-block; padding: 10px 20px; background-color: #3498db; 
+               color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
+        .btn:hover { background-color: #2980b9; }
+        #scanner { width: 100%; max-width: 500px; margin: 0 auto; }
+        #video { width: 100%; border: 1px solid #ddd; }
+        #upload-form { display: none; margin-top: 20px; }
+        input, select { padding: 8px; margin-bottom: 10px; width: 100%; }
+        label { display: block; margin-top: 10px; }
+        #success, #error { display: none; padding: 10px; margin-top: 20px; border-radius: 4px; }
+        #success { background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; }
+        #error { background-color: #f2dede; color: #a94442; border: 1px solid #ebccd1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scan QR Code</h1>
+        
+        <div id="scanner">
+            <video id="video" autoplay></video>
+            <button id="start-scan" class="btn">Start Scanner</button>
+            <p id="scanning-status">Press the button to start scanning</p>
+        </div>
+        
+        <div id="upload-form">
+            <h2>Upload Document</h2>
+            <p id="shop-info"></p>
+            
+            <form id="print-form">
+                <input type="hidden" id="shop-id" name="shopId">
+                <input type="hidden" id="server-url" name="serverUrl">
+                
+                <label for="file">Select Document:</label>
+                <input type="file" id="file" name="file" required>
+                
+                <label for="copies">Copies:</label>
+                <input type="number" id="copies" name="copies" min="1" value="1">
+                
+                <label for="paperSize">Paper Size:</label>
+                <select id="paperSize" name="paperSize">
+                    <option value="A4">A4</option>
+                    <option value="Letter">Letter</option>
+                    <option value="Legal">Legal</option>
+                </select>
+                
+                <label for="printType">Print Type:</label>
+                <select id="printType" name="printType">
+                    <option value="bw">Black & White</option>
+                    <option value="color">Color</option>
+                </select>
+                
+                <button type="submit" class="btn" style="margin-top: 20px;">Submit Print Job</button>
+            </form>
+        </div>
+        
+        <div id="success"></div>
+        <div id="error"></div>
+        
+        <p><a href="/" class="btn" style="margin-top: 20px;">Back to Home</a></p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startButton = document.getElementById('start-scan');
+            const video = document.getElementById('video');
+            const scanningStatus = document.getElementById('scanning-status');
+            const uploadForm = document.getElementById('upload-form');
+            const shopInfo = document.getElementById('shop-info');
+            const shopIdInput = document.getElementById('shop-id');
+            const serverUrlInput = document.getElementById('server-url');
+            const printForm = document.getElementById('print-form');
+            const successDiv = document.getElementById('success');
+            const errorDiv = document.getElementById('error');
+            
+            let scanner = null;
+            
+            startButton.addEventListener('click', function() {
+                startScanner();
+            });
+            
+            function startScanner() {
+                // Access the device camera
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(function(stream) {
+                        video.srcObject = stream;
+                        scanner = setInterval(scanQRCode, 500);
+                        startButton.style.display = 'none';
+                        scanningStatus.textContent = 'Scanning for QR code...';
+                    })
+                    .catch(function(error) {
+                        scanningStatus.textContent = 'Could not access camera: ' + error.message;
+                    });
+            }
+            
+            function scanQRCode() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    // Create a temporary canvas to capture the video frame
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    
+                    // Get image data for QR code scanning
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: "dontInvert",
+                    });
+                    
+                    if (code) {
+                        // Stop scanning
+                        clearInterval(scanner);
+                        video.srcObject.getTracks().forEach(track => track.stop());
+                        
+                        // Parse QR code data
+                        try {
+                            const qrData = JSON.parse(code.data);
+                            if (qrData.shop_id && qrData.server_url) {
+                                scanningStatus.textContent = 'QR code detected!';
+                                shopInfo.textContent = 'Printing at: ' + (qrData.shop_name || qrData.shop_id);
+                                shopIdInput.value = qrData.shop_id;
+                                serverUrlInput.value = qrData.server_url;
+                                
+                                // Hide scanner, show upload form
+                                document.getElementById('scanner').style.display = 'none';
+                                uploadForm.style.display = 'block';
+                            } else {
+                                scanningStatus.textContent = 'Invalid QR code format';
+                                startButton.style.display = 'inline-block';
+                            }
+                        } catch (e) {
+                            scanningStatus.textContent = 'Could not parse QR code data';
+                            startButton.style.display = 'inline-block';
+                        }
+                    }
+                }
+            }
+            
+            // Handle form submission
+            printForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(printForm);
+                
+                // Show loading state
+                const submitBtn = printForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                // Clear previous messages
+                successDiv.style.display = 'none';
+                errorDiv.style.display = 'none';
+                
+                fetch('/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    if (data.status === 'success') {
+                        successDiv.textContent = data.message + ' Job ID: ' + data.jobId;
+                        successDiv.style.display = 'block';
+                        printForm.reset();
+                    } else {
+                        errorDiv.textContent = data.error || 'An error occurred';
+                        errorDiv.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    errorDiv.textContent = 'Network error: ' + error.message;
+                    errorDiv.style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+        

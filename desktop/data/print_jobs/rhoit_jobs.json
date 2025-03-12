@@ -1,0 +1,13 @@
+[
+  {
+    "job_id": "job_4c0ce255e37f4117ad9aea7f787d6843",
+    "shop_id": "rhoit",
+    "filename": "1-868b2d73-f917-45ec-a4f1-7707500f07dc.pdf",
+    "file_path": "data/print_jobs/rhoit/job_4c0ce255e37f4117ad9aea7f787d6843.pdf",
+    "copies": "2",
+    "color": true,
+    "paper_size": "A4",
+    "status": "pending",
+    "created_at": "2025-03-12T09:49:10.035518"
+  }
+]

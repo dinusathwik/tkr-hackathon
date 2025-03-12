@@ -1,0 +1,13 @@
+[
+  {
+    "job_id": "job_567b197db1b04230a54216808fb014f4",
+    "shop_id": "ARJUN",
+    "filename": "dinu_Arc.png",
+    "file_path": "data/print_jobs/ARJUN/job_567b197db1b04230a54216808fb014f4.png",
+    "copies": "1",
+    "color": false,
+    "paper_size": "A4",
+    "status": "pending",
+    "created_at": "2025-03-12T02:10:44.052912"
+  }
+]
